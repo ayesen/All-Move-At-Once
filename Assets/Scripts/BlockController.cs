@@ -8,27 +8,74 @@ public class BlockController : MonoBehaviour
 
     [SerializeField]
     private Sprite select;
+    public Sprite Select
+    {
+        get
+        {
+            return select;
+        }
+        set
+        {
+            select = value;
+        }
+    }
+
     [SerializeField]
     private Sprite notSelect;
-
-    // Start is called before the first frame update
-    void Start()
+    public Sprite NotSelect
     {
+        get
+        {
+            return notSelect;
+        }
+        set
+        {
+            notSelect = value;
+        }
+    }
+
+    //State Machine
+    private BlockStateBase currentState;
+    private BlockStateSelect SelectState = new BlockStateSelect();
+    private BlockStateMoving MovingState = new BlockStateMoving();
+
+    public void ChangeState(BlockStateBase newState)
+    {
+        if (currentState != null)
+        {
+            currentState.LeaveState(this);
+        }
+
+        currentState = newState;
+
+        if (currentState != null)
+        {
+            currentState.EnterState(this);
+        }
+    }
+
+    void Awake()
+    {
+        //find the 3 color blocks
         blocks.Add(GameObject.FindGameObjectWithTag("Blue"));
         blocks.Add(GameObject.FindGameObjectWithTag("Yellow"));
         blocks.Add(GameObject.FindGameObjectWithTag("Red"));
     }
-
-    // Update is called once per frame
-    void Update()
+    void Start()
     {
-        if(Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            ChangeSprite();
-        }
+        ChangeState(SelectState);
     }
 
-    private void ChangeSprite()
+    void Update()
+    {
+        currentState.Update(this);
+    }
+
+
+
+
+    //when the block is pressed, highlight the block and un highlight other blocks
+    public void ChangeSprite()
     {
         for (int i = 0; i < blocks.Count; i++)
         {

@@ -14,11 +14,12 @@ public class LevelReader : MonoBehaviour
     [SerializeField]
     private Vector2 position = new Vector2(0,0);//the position where the level will be spawn
     [SerializeField]
-    private float margin;
-    [SerializeField]
     private GameObject blockControl;
 
-    public int rowCount = 0;
+    public float margin;
+
+    private float blockCount;
+    private int rowCount = 0;
     private int colCount = 0;
 
     void Awake()
@@ -56,7 +57,7 @@ public class LevelReader : MonoBehaviour
             colCount++;
             position = new Vector2(startPosition.x, position.y - margin);
         }
-        float blockCount = rowCount / colCount;
+        blockCount = rowCount / colCount;
         GameObject BC = Instantiate(blockControl, new Vector2(0, 0), Quaternion.identity);
         BC.transform.SetParent(this.transform);
         //set the position of the grid to the middle of the screen

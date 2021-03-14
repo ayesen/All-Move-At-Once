@@ -281,6 +281,6 @@ MonoBehaviour:
   textLevels:
   - {fileID: 4900000, guid: 704c89232fede8440b091c5a83ac8acb, type: 3}
   position: {x: 0, y: 0}
-  margin: 0.6
   blockControl: {fileID: 1978030665321041658, guid: 5074a0d07860e534a8f1403b7a081ba3,
     type: 3}
+  margin: 0.6
