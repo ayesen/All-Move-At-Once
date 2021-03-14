@@ -56,12 +56,12 @@ public class LevelReader : MonoBehaviour
             colCount++;
             position = new Vector2(startPosition.x, position.y - margin);
         }
-
-       GameObject BC = Instantiate(blockControl, new Vector2(0, 0), Quaternion.identity);
-       BC.transform.SetParent(this.transform);
-       //set the position of the grid to the middle of the screen
-       //this.transform.position = new Vector2(-1 * ((margin * 2 - 1) * 1.5f + (rowCount/colCount/2 - 0.5f)), (margin * 2 - 1) * 1.5f + (rowCount / colCount / 2 - 0.5f));
-       this.transform.position = new Vector2((-1 * (rowCount / colCount / 2 - 0.5f) * (margin * 2)), (rowCount / colCount / 2 - 0.5f) * (margin * 2));
+        float blockCount = rowCount / colCount;
+        GameObject BC = Instantiate(blockControl, new Vector2(0, 0), Quaternion.identity);
+        BC.transform.SetParent(this.transform);
+        //set the position of the grid to the middle of the screen
+        //this.transform.position = new Vector2(-1 * ((margin * 2 - 1) * 1.5f + (rowCount/colCount/2 - 0.5f)), (margin * 2 - 1) * 1.5f + (rowCount / colCount / 2 - 0.5f));
+        this.transform.position = new Vector2(-1 * ((blockCount / 2 - 0.5f) + (margin * 2 - 1) * ((blockCount - 1) / 2)), (blockCount / 2 - 0.5f) + (margin * 2 - 1) * ((blockCount - 1) / 2));
     }
 
     public void ClearLevel()
