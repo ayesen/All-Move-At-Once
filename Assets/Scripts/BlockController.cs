@@ -5,7 +5,7 @@ using UnityEngine;
 public class BlockController : MonoBehaviour
 {
     public List<GameObject> blocks = new List<GameObject>();
-
+    public LevelReader LR;
     [SerializeField]
     private Sprite select;
     public Sprite Select
@@ -36,8 +36,30 @@ public class BlockController : MonoBehaviour
 
     //State Machine
     private BlockStateBase currentState;
-    private BlockStateSelect SelectState = new BlockStateSelect();
-    private BlockStateMoving MovingState = new BlockStateMoving();
+    private BlockStateSelect selectState = new BlockStateSelect();
+    public BlockStateSelect SelectState
+    {
+        get
+        {
+            return selectState;
+        }
+        set
+        {
+            selectState = value;
+        }
+    }
+    private BlockStateMoving movingState = new BlockStateMoving();
+    public BlockStateMoving MovingState
+    {
+        get
+        {
+            return movingState;
+        }
+        set
+        {
+            movingState = value;
+        }
+    }
 
     public void ChangeState(BlockStateBase newState)
     {
@@ -56,6 +78,7 @@ public class BlockController : MonoBehaviour
 
     void Awake()
     {
+        LR = GameObject.FindGameObjectWithTag("LE").GetComponent<LevelReader>();
         //find the 3 color blocks
         blocks.Add(GameObject.FindGameObjectWithTag("Blue"));
         blocks.Add(GameObject.FindGameObjectWithTag("Yellow"));
@@ -63,7 +86,7 @@ public class BlockController : MonoBehaviour
     }
     void Start()
     {
-        ChangeState(SelectState);
+        ChangeState(selectState);
     }
 
     void Update()

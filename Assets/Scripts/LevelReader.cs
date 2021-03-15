@@ -16,11 +16,14 @@ public class LevelReader : MonoBehaviour
     [SerializeField]
     private GameObject blockControl;
 
-    public float margin;
+    public static float margin = 0.6f;
 
     private float blockCount;
     private int rowCount = 0;
     private int colCount = 0;
+
+    public List<GameObject> GridBase = new List<GameObject>();
+
 
     void Awake()
     {
@@ -49,6 +52,11 @@ public class LevelReader : MonoBehaviour
                     {
                         GameObject gridBlock =  Instantiate(data.generatedPrefab, position, Quaternion.identity);
                         gridBlock.transform.SetParent(this.transform);
+                        if(gridBlock.tag == "Grid")
+                        {
+                            GridBase.Add(gridBlock);
+                        }
+                        
                     }
                 }
                 rowCount++;
@@ -63,10 +71,13 @@ public class LevelReader : MonoBehaviour
         //set the position of the grid to the middle of the screen
         this.transform.position = new Vector2(-1 * ((margin * 2) * ((blockCount - 1) / 2)), (margin * 2) * ((blockCount - 1) / 2));
 
+
     }
+
 
     public void ClearLevel()
     {
+        GridBase.Clear();
         position = new Vector2(0, 0);
         this.transform.position = position;
         foreach (Transform child in transform)
@@ -75,6 +86,14 @@ public class LevelReader : MonoBehaviour
         }
         rowCount = 0;
         colCount = 0;
+    }
+
+    public void ColliderSwitch()
+    {
+        foreach (GameObject gridBlock in GridBase)
+        {
+            gridBlock.GetComponent<Collider2D>().enabled = !gridBlock.GetComponent<Collider2D>().enabled;
+        }
     }
 
     public void Test()

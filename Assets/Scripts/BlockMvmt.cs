@@ -6,6 +6,10 @@ public class BlockMvmt : MonoBehaviour
 {
     public bool isPressed = false;
 
+    private void Awake()
+    {
+        
+    }
     void Start()
     {
         
@@ -13,7 +17,7 @@ public class BlockMvmt : MonoBehaviour
 
     void Update()
     {
-        
+
     }
     private void OnMouseDown()
     {
@@ -23,16 +27,13 @@ public class BlockMvmt : MonoBehaviour
     {
         isPressed = false;
     }
-    public void Move()
-    {
-        
-    }
+
     public void Rotate(KeyCode inputKey)
     {
-        Quaternion currentRotation = this.transform.rotation;
+        Quaternion currentRotation = this.transform.rotation; //get the original rotation of the block
         switch(inputKey)
         {
-            case KeyCode.W:
+            case KeyCode.W: //if any of the following key is pressed then rotate to corresponding direction
                 this.transform.rotation = Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y, 0);
                 break;
             case KeyCode.A:
@@ -51,6 +52,13 @@ public class BlockMvmt : MonoBehaviour
             
         }
     }
+
+    public void Move()
+    {
+
+
+    }
+
 
 
 }

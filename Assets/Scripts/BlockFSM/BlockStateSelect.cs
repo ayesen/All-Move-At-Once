@@ -6,7 +6,7 @@ public class BlockStateSelect : BlockStateBase
 {
     public override void EnterState(BlockController BC)
     {
-
+       
     }
 
     public override void Update(BlockController BC)
@@ -30,6 +30,11 @@ public class BlockStateSelect : BlockStateBase
                 }
             }
 
+        }
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            BC.ChangeState(BC.MovingState);
         }
 
     }
