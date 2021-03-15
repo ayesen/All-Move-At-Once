@@ -65,13 +65,21 @@ public class BlockMvmt : MonoBehaviour
             if(hit.collider.tag == "Grid")
             {
                 transform.position = hit.collider.transform.position;
-                yield return new WaitForSeconds(.5f);
+                yield return new WaitForSeconds(.2f);
                 yield return MoveCo();
             }
             else 
             {
-                MovingDone++;
-                yield break;
+                if (hit.collider.GetComponent<BlockMvmt>().MovingDone == 1)
+                {
+                    MovingDone++;
+                    yield break;
+                }
+                else
+                {
+                    yield return new WaitForSeconds(.2f);
+                    yield return MoveCo();
+                }
             }
         }
         else
