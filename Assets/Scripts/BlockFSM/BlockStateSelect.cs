@@ -6,18 +6,7 @@ public class BlockStateSelect : BlockStateBase
 {
     public override void EnterState(BlockController BC)
     {
-        for (int i = 0; i < BC.blocks.Count; i++)
-        {
-            BC.blocks[i].GetComponent<BlockMvmt>().checkDest();
-            if (BC.blocks[i].GetComponent<BlockMvmt>().onDest)
-            {
-                BC.blocks[i].GetComponent<BlockMvmt>().MovingDone = 1;
-            }
-            else
-            {
-                BC.blocks[i].GetComponent<BlockMvmt>().MovingDone = 0;
-            }
-        }
+        BC.nextLvl = true;
 
     }
 
@@ -33,6 +22,8 @@ public class BlockStateSelect : BlockStateBase
         {
             if (!BC.blocks[i].GetComponent<BlockMvmt>().onDest)                              //if the block has not reach its destination
             {
+                BC.nextLvl = false;
+                BC.blocks[i].GetComponent<BlockMvmt>().MovingDone = 0;
                 if (BC.blocks[i].GetComponent<SpriteRenderer>().sprite == BC.Select)         //get the block which is selected
                 {
                     foreach (KeyCode key in System.Enum.GetValues(typeof(KeyCode)))          //find out which key is pressed and record the value

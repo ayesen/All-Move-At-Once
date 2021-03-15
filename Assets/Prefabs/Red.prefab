@@ -200,6 +200,7 @@ MonoBehaviour:
   currentPos: {x: 0, y: 0, z: 0}
   lastPos: {x: 0, y: 0, z: 0}
   collided: 0
+  order: 1
 --- !u!50 &5646544258353091358
 Rigidbody2D:
   serializedVersion: 4

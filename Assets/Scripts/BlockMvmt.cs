@@ -12,11 +12,8 @@ public class BlockMvmt : MonoBehaviour
     public Vector3 lastPos;
     public bool collided = false;
     public RaycastHit2D Down;
+    public int order;
 
-    private void Update()
-    {
-       
-    }
     private void OnMouseDown()
     {
         if (!onDest)
@@ -68,7 +65,9 @@ public class BlockMvmt : MonoBehaviour
     {
         if(collision.tag == "Yellow" | collision.tag == "Blue"| collision.tag == "Red")
         {
+
             collided = true;
+            
         }
     }
 
@@ -77,47 +76,6 @@ public class BlockMvmt : MonoBehaviour
         if (collision.tag == "Yellow" | collision.tag == "Blue" | collision.tag == "Red")
         {
             collided = false;
-        }
-    }
-    public IEnumerator MoveGo()
-    {
-        if (MovingDone == 0)
-        {
-            
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.up), 1f);
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector2.up) * 1f);
-            if (hit)
-            {
-                if (collided == true)
-                {
-                    this.transform.position = currentPos;
-                    yield return new WaitForSeconds(.2f);
-                    yield return Move();
-                }
-                else
-                {
-                    if (hit.collider.GetComponent<BlockMvmt>().MovingDone == 1)
-                    {
-                        MovingDone++;
-                        yield break;
-                    }
-                    else
-                    {
-                        yield return new WaitForSeconds(.2f);
-                        yield return Move();
-
-                    }
-                }
-            }
-            else
-            {
-                MovingDone++;
-                yield break;
-            }
-        }
-        else
-        {
-            yield break;
         }
     }
 
@@ -145,8 +103,15 @@ public class BlockMvmt : MonoBehaviour
                 }
                 else if (hit.collider.GetComponent<BlockMvmt>().MovingDone == 0)
                 {
-                    yield return new WaitForSeconds(.2f);
-                    yield return Move();
+                    if (order > hit.collider.GetComponent<BlockMvmt>().order)
+                    {
+                        yield return new WaitForSeconds(.2f);
+                        yield return Move();
+                    }
+                    else
+                    {
+                        MovingDone = 1;
+                    }
                 }
 
             }

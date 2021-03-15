@@ -24,16 +24,33 @@ public class LevelReader : MonoBehaviour
 
     public List<GameObject> GridBase = new List<GameObject>();
 
+    public int CurrentLevel = 0;
+
+    public bool nextLvl = false;
 
     void Awake()
     {
-        //GenLevel(0);
+        GenLevel(0);
 
     }
 
     private void Update()
     {
-        Test();
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            StartCoroutine(Restart());
+        }
+        if (nextLvl == true)
+        {
+            if (CurrentLevel < textLevels.Length - 1)
+            {
+                if (Input.GetKeyDown(KeyCode.N))
+                {
+                    CurrentLevel++;
+                    StartCoroutine(Restart());
+                }
+            }
+        }
     }
 
     public void GenLevel(int levelNum)
@@ -96,16 +113,14 @@ public class LevelReader : MonoBehaviour
         }
     }
 
-    public void Test()
+
+    public IEnumerator Restart()
     {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            GenLevel(0);
-        }
-        if (Input.GetKey(KeyCode.T))
-        {
-            ClearLevel();
-        }
+        nextLvl = false;
+        ClearLevel();
+        yield return new WaitForSeconds(0.1f);
+        GenLevel(CurrentLevel);
+        yield break;
     }
 
 }

@@ -280,7 +280,9 @@ MonoBehaviour:
       type: 3}
   textLevels:
   - {fileID: 4900000, guid: 704c89232fede8440b091c5a83ac8acb, type: 3}
+  - {fileID: 4900000, guid: 6a47230aa192f454f8f5fbb2097f2f84, type: 3}
   position: {x: 0, y: 0}
   blockControl: {fileID: 1978030665321041658, guid: 5074a0d07860e534a8f1403b7a081ba3,
     type: 3}
   GridBase: []
+  CurrentLevel: 0

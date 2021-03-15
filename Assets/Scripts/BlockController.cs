@@ -8,6 +8,8 @@ public class BlockController : MonoBehaviour
     public LevelReader LR;
     [SerializeField]
     private Sprite select;
+    public bool nextLvl = true;
+
     public Sprite Select
     {
         get
@@ -80,7 +82,6 @@ public class BlockController : MonoBehaviour
         }
 
         currentState = newState;
-        Debug.Log(currentState);
 
         if (currentState != null)
         {
@@ -103,11 +104,11 @@ public class BlockController : MonoBehaviour
 
     void Update()
     {
+
+        GetComponentInParent<LevelReader>().nextLvl = nextLvl;
+        
         currentState.Update(this);
     }
-
-
-    
 
     //when the block is pressed, highlight the block and un highlight other blocks
     public void ChangeSprite()
