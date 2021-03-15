@@ -5,6 +5,7 @@ using UnityEngine;
 public class BlockMvmt : MonoBehaviour
 {
     public bool isPressed = false;
+    public int MovingDone = 0;
 
     private void Awake()
     {
@@ -12,11 +13,14 @@ public class BlockMvmt : MonoBehaviour
     }
     void Start()
     {
-        
+
     }
 
     void Update()
     {
+        
+
+        
 
     }
     private void OnMouseDown()
@@ -53,11 +57,36 @@ public class BlockMvmt : MonoBehaviour
         }
     }
 
+    public IEnumerator MoveCo()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.up), 10f);
+        if (hit)
+        {
+            if(hit.collider.tag == "Grid")
+            {
+                transform.position = hit.collider.transform.position;
+                yield return new WaitForSeconds(.5f);
+                yield return MoveCo();
+            }
+            else 
+            {
+                MovingDone++;
+                yield break;
+            }
+        }
+        else
+        {
+            MovingDone++;
+            yield break;
+        }
+    }
+
     public void Move()
     {
 
 
     }
+
 
 
 
