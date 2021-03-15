@@ -6,12 +6,13 @@ public class BlockStateSelect : BlockStateBase
 {
     public override void EnterState(BlockController BC)
     {
-        BC.nextLvl = true;
+        BC.nextLvl = true;//set next level to true first
 
     }
 
     public override void Update(BlockController BC)
     {
+        
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             BC.ChangeSprite();
@@ -22,7 +23,7 @@ public class BlockStateSelect : BlockStateBase
         {
             if (!BC.blocks[i].GetComponent<BlockMvmt>().onDest)                              //if the block has not reach its destination
             {
-                BC.nextLvl = false;
+                BC.nextLvl = false; //if any of the block is not on destination then set nextlvl back to false
                 BC.blocks[i].GetComponent<BlockMvmt>().MovingDone = 0;
                 if (BC.blocks[i].GetComponent<SpriteRenderer>().sprite == BC.Select)         //get the block which is selected
                 {
@@ -41,7 +42,7 @@ public class BlockStateSelect : BlockStateBase
         {
             BC.ChangeState(BC.MovingState);
         }
-
+        BC.LR.nextLvl = BC.nextLvl;
     }
 
     public override void LeaveState(BlockController BC)

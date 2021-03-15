@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
+using UnityEngine.UI;
 
 //Credit: some of the script is based on Comp-3 Interactive's Level Generator script
 //https://www.youtube.com/watch?v=-6ww4MMi7C0
@@ -22,6 +23,9 @@ public class LevelReader : MonoBehaviour
     private int rowCount = 0;
     private int colCount = 0;
 
+    public Text Instruction;
+    private Color textColor;
+
     public List<GameObject> GridBase = new List<GameObject>();
 
     public int CurrentLevel = 0;
@@ -30,30 +34,43 @@ public class LevelReader : MonoBehaviour
 
     void Awake()
     {
-        GenLevel(0);
-
+        GenLevel(0); //start at level_00
+        textColor = Instruction.color;
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            StartCoroutine(Restart());
+            StartCoroutine(Restart()); //if R is pressed then restart this level
         }
         if (nextLvl == true)
         {
+
             if (CurrentLevel < textLevels.Length - 1)
             {
-                if (Input.GetKeyDown(KeyCode.N))
+                Instruction.text = "Press N to Next Level After Solving Current Level";
+                Instruction.color = Color.yellow;
+                if (Input.GetKeyDown(KeyCode.N)) //if all three blocks are on destination then next level is ready, player can press n to start next level
                 {
                     CurrentLevel++;
                     StartCoroutine(Restart());
                 }
             }
+            else
+            {
+                Instruction.color = Color.yellow;
+                Instruction.text = "Nice! All Levels Solved!";
+            }
+        }
+        else
+        {
+            Instruction.color = textColor;
+            Instruction.text = "Press N to Next Level After Solving Current Level";
         }
     }
 
-    public void GenLevel(int levelNum)
+    public void GenLevel(int levelNum)  //function used to generate level
     {
         
         Vector2 startPosition = position;
@@ -67,11 +84,11 @@ public class LevelReader : MonoBehaviour
                 {
                     if(c == data.character)
                     {
-                        GameObject gridBlock =  Instantiate(data.generatedPrefab, position, Quaternion.identity);
+                        GameObject gridBlock =  Instantiate(data.generatedPrefab, position, Quaternion.identity); 
                         gridBlock.transform.SetParent(this.transform);
                         if(gridBlock.tag == "Grid")
                         {
-                            GridBase.Add(gridBlock);
+                            GridBase.Add(gridBlock); //if the object generated is a grid object then put it into the grid list
                         }
                         
                     }
@@ -83,7 +100,7 @@ public class LevelReader : MonoBehaviour
             position = new Vector2(startPosition.x, position.y - margin);
         }
         blockCount = rowCount / colCount;
-        GameObject BC = Instantiate(blockControl, new Vector2(0, 0), Quaternion.identity);
+        GameObject BC = Instantiate(blockControl, new Vector2(0, 0), Quaternion.identity);  //instantiate new block controller for different levels
         BC.transform.SetParent(this.transform);
         //set the position of the grid to the middle of the screen
         this.transform.position = new Vector2(-1 * ((margin * 2) * ((blockCount - 1) / 2)), (margin * 2) * ((blockCount - 1) / 2));
@@ -92,7 +109,7 @@ public class LevelReader : MonoBehaviour
     }
 
 
-    public void ClearLevel()
+    public void ClearLevel() //remove all items in current level
     {
         GridBase.Clear();
         position = new Vector2(0, 0);
@@ -105,7 +122,7 @@ public class LevelReader : MonoBehaviour
         colCount = 0;
     }
 
-    public void ColliderSwitch()
+    public void ColliderSwitch() //turn gird object's collider on/off
     {
         foreach (GameObject gridBlock in GridBase)
         {
@@ -114,11 +131,11 @@ public class LevelReader : MonoBehaviour
     }
 
 
-    public IEnumerator Restart()
+    public IEnumerator Restart() //use this function to restart current level or to generate next level
     {
         nextLvl = false;
         ClearLevel();
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.2f);
         GenLevel(CurrentLevel);
         yield break;
     }

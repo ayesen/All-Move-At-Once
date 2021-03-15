@@ -91,7 +91,7 @@ public class BlockController : MonoBehaviour
 
     void Awake()
     {
-        LR = GameObject.FindGameObjectWithTag("LE").GetComponent<LevelReader>();
+        LR = GameObject.FindGameObjectWithTag("LE").GetComponent<LevelReader>(); //find game objects in awake
         //find the 3 color blocks
         blocks.Add(GameObject.FindGameObjectWithTag("Blue"));
         blocks.Add(GameObject.FindGameObjectWithTag("Yellow"));
@@ -99,14 +99,12 @@ public class BlockController : MonoBehaviour
     }
     void Start()
     {
-        ChangeState(selectState);
+        ChangeState(selectState); //start with select state
     }
 
     void Update()
     {
 
-        GetComponentInParent<LevelReader>().nextLvl = nextLvl;
-        
         currentState.Update(this);
     }
 
