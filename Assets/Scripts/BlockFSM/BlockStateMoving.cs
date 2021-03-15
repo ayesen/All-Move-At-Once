@@ -11,7 +11,7 @@ public class BlockStateMoving : BlockStateBase
         BC.LR.ColliderSwitch();
         for (int i = 0; i < BC.blocks.Count; i++)
         {
-            BC.blocks[i].GetComponent<BlockMvmt>().StartCoroutine(BC.blocks[i].GetComponent<BlockMvmt>().MoveCo());
+            BC.blocks[i].GetComponent<BlockMvmt>().StartCoroutine(BC.blocks[i].GetComponent<BlockMvmt>().Move());
         }
 
     }
@@ -29,7 +29,6 @@ public class BlockStateMoving : BlockStateBase
             for (int i = 0; i < BC.blocks.Count; i++)
             {
                 BC.blocks[i].GetComponent<BlockMvmt>().MovingDone = 0;
-                
             }
             BC.ChangeState(BC.SelectState);
         }
@@ -37,6 +36,19 @@ public class BlockStateMoving : BlockStateBase
 
     public override void LeaveState(BlockController BC)
     {
+        for (int i = 0; i < BC.blocks.Count; i++)
+        {
+            BC.blocks[i].GetComponent<BlockMvmt>().checkDest();
+            if (BC.blocks[i].GetComponent<BlockMvmt>().onDest)
+            {
+                BC.blocks[i].GetComponent<BlockMvmt>().MovingDone = 1;
+            }
+            else
+            {
+                BC.blocks[i].GetComponent<BlockMvmt>().MovingDone = 0;
+            }
+        }
         BC.LR.ColliderSwitch();
+
     }
 }

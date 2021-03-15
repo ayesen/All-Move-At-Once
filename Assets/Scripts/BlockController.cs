@@ -36,6 +36,17 @@ public class BlockController : MonoBehaviour
 
     //State Machine
     private BlockStateBase currentState;
+    public BlockStateBase CurrentState
+    {
+        get
+        {
+            return currentState;
+        }
+        set
+        {
+            currentState = value;
+        }
+    }
     private BlockStateSelect selectState = new BlockStateSelect();
     public BlockStateSelect SelectState
     {
@@ -69,6 +80,7 @@ public class BlockController : MonoBehaviour
         }
 
         currentState = newState;
+        Debug.Log(currentState);
 
         if (currentState != null)
         {
@@ -95,7 +107,7 @@ public class BlockController : MonoBehaviour
     }
 
 
-
+    
 
     //when the block is pressed, highlight the block and un highlight other blocks
     public void ChangeSprite()

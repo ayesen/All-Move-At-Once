@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1978030665321041659}
   m_Layer: 0
   m_Name: BlockControl
-  m_TagString: Untagged
+  m_TagString: BC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,5 +44,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blocks: []
+  LR: {fileID: 0}
   select: {fileID: 21300000, guid: 1d42b154710c6604c8fad86377bedca5, type: 3}
   notSelect: {fileID: 21300000, guid: f846ac46b8670b24b8ca862d84025a2c, type: 3}

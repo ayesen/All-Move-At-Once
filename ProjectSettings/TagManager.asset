@@ -9,6 +9,7 @@ TagManager:
   - Yellow
   - Grid
   - LE
+  - BC
   layers:
   - Default
   - TransparentFX
